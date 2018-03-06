@@ -79,7 +79,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "Memory {host: $tag_machine, container: $tag_container_name}",
+              "alias": "Memory {container: $tag_container_name}",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -87,12 +87,6 @@
                     "$__interval"
                   ],
                   "type": "time"
-                },
-                {
-                  "params": [
-                    "machine"
-                  ],
-                  "type": "tag"
                 },
                 {
                   "params": [
@@ -104,7 +98,7 @@
               "measurement": "memory_usage",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT \"value\" FROM \"memory_usage\" WHERE \"container_name\" =~ /^$container$/ AND \"machine\" =~ /^$host$/ AND $timeFilter",
+              "query": "SELECT \"value\" FROM \"memory_usage\" WHERE \"container_name\" =~ /^$container$/ AND $timeFilter",
               "rawQuery": false,
               "refId": "A",
               "resultFormat": "time_series",
@@ -127,12 +121,6 @@
                   "key": "container_name",
                   "operator": "=~",
                   "value": "/^$container$*/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "machine",
-                  "operator": "=~",
-                  "value": "/^$host$/"
                 }
               ]
             }
@@ -206,7 +194,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "CPU {host: $tag_machine, container: $tag_container_name}",
+              "alias": "CPU {container: $tag_container_name}",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -214,12 +202,6 @@
                     "$interval"
                   ],
                   "type": "time"
-                },
-                {
-                  "params": [
-                    "machine"
-                  ],
-                  "type": "tag"
                 },
                 {
                   "params": [
@@ -258,12 +240,6 @@
                   "key": "container_name",
                   "operator": "=~",
                   "value": "/^$container$*/"
-                },
-                {
-                  "condition": "AND",
-                  "key": "machine",
-                  "operator": "=~",
-                  "value": "/^$host$/"
                 }
               ]
             }
@@ -349,7 +325,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "Usage {host: $tag_machine, container: $tag_container_name}",
+              "alias": "Usage {container: $tag_container_name}",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -361,12 +337,6 @@
                 {
                   "params": [
                     "container_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "machine"
                   ],
                   "type": "tag"
                 }
@@ -392,11 +362,6 @@
               ],
               "tags": [
                 {
-                  "key": "machine",
-                  "operator": "=~",
-                  "value": "/^$host$/"
-                },
-                {
                   "condition": "AND",
                   "key": "container_name",
                   "operator": "=~",
@@ -405,7 +370,7 @@
               ]
             },
             {
-              "alias": "Limit {host: $tag_machine, container: $tag_container_name}",
+              "alias": "Limit { container: $tag_container_name}",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -417,12 +382,6 @@
                 {
                   "params": [
                     "container_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "machine"
                   ],
                   "type": "tag"
                 }
@@ -447,11 +406,6 @@
                 ]
               ],
               "tags": [
-                {
-                  "key": "machine",
-                  "operator": "=~",
-                  "value": "/^$host$/"
-                },
                 {
                   "condition": "AND",
                   "key": "container_name",
@@ -530,7 +484,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "alias": "RX {host: $tag_machine, container: $tag_container_name}",
+              "alias": "RX {container: $tag_container_name}",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -542,12 +496,6 @@
                 {
                   "params": [
                     "container_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "machine"
                   ],
                   "type": "tag"
                 }
@@ -579,11 +527,6 @@
               ],
               "tags": [
                 {
-                  "key": "machine",
-                  "operator": "=~",
-                  "value": "/^$host$/"
-                },
-                {
                   "condition": "AND",
                   "key": "container_name",
                   "operator": "=~",
@@ -592,7 +535,7 @@
               ]
             },
             {
-              "alias": "TX {host: $tag_machine, container: $tag_container_name}",
+              "alias": "TX { container: $tag_container_name}",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -604,12 +547,6 @@
                 {
                   "params": [
                     "container_name"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "machine"
                   ],
                   "type": "tag"
                 }
@@ -640,11 +577,6 @@
                 ]
               ],
               "tags": [
-                {
-                  "key": "machine",
-                  "operator": "=~",
-                  "value": "/^$host$/"
-                },
                 {
                   "condition": "AND",
                   "key": "container_name",
@@ -705,29 +637,6 @@
   "templating": {
     "list": [
       {
-        "allValue": "",
-        "current": {
-          "text": "backbox.corde.org",
-          "value": "backbox.corde.org"
-        },
-        "datasource": "influx",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Host",
-        "multi": false,
-        "name": "host",
-        "options": [],
-        "query": "show tag values with key = \"machine\"",
-        "refresh": 1,
-        "regex": "",
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
         "allValue": null,
         "current": {
           "text": "/",
@@ -740,7 +649,7 @@
         "multi": false,
         "name": "container",
         "options": [],
-        "query": "show tag values with key = \"container_name\" WHERE machine =~ /^$host$/",
+        "query": "show tag values with key = \"container_name\" ",
         "refresh": 1,
         "regex": "/([^.]+)/",
         "sort": 0,
@@ -782,6 +691,6 @@
     ]
   },
   "timezone": "browser",
-  "title": "cAdvisor",
+  "title": "cAdvisor2",
   "version": 2
 }
